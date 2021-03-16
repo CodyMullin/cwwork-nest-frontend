@@ -2,6 +2,7 @@
   <div>
     <Navbar />
     <div>
+      <h4 class="px-4 py-6 text-xl font-semibold">Materials</h4>
       <div class="flex justify-between items-center">
         <h4 class="px-4 py-6 text-xl font-semibold">
           {{ this.material.name }}
@@ -16,6 +17,9 @@
           </a>
         </router-link>
       </div>
+
+      <p class="pt-3 mx-4 text-sm">{{ this.materials }}</p>
+
       <div class="mx-4 pt-8">
         <div class="flex items-center justify-between text-lg py-4">
           <span>Category</span>

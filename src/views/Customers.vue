@@ -2,8 +2,8 @@
   <div>
     <Navbar />
     <div class="flex justify-between items-center">
-      <h4 class="px-4 py-6 text-xl font-semibold">Materials</h4>
-      <router-link to="/material/create">
+      <h4 class="px-4 py-6 text-xl font-semibold">Customers</h4>
+      <router-link to="/customer/create">
         <a>
           <button
             class="mx-4 my-6 px-4 py-1 rounded-lg bg-green-400 text-sm text-gray-100 focus:outline-none"
@@ -23,15 +23,12 @@
     </div>
 
     <div class="py-6 px-4">
-      <div v-for="material in materials.data" :key="material.id">
-        <router-link :to="`/materials/${material.id}`">
+      <div v-for="customer in customers.data" :key="customer.id">
+        <router-link :to="`/customer/${customer.id}`">
           <a>
             <div class="flex items-center justify-between py-4">
               <div class="mx-4">
-                <div class="font-semibold text-lg">{{ material.name }}</div>
-                <div class="text-xs text-gray-400">
-                  {{ material.category }}
-                </div>
+                <div class="font-semibold text-lg">{{ customer.name }}</div>
               </div>
               <div class="px-3 py-1 text-gray-900">
                 <svg
@@ -66,23 +63,23 @@ export default {
   components: { Navbar },
   data() {
     return {
-      materials: [],
+      customers: [],
       accessToken: localStorage.accessToken,
     };
   },
   created() {
-    this.fetchMaterials();
+    this.fetchCustomers();
   },
   methods: {
-    fetchMaterials() {
+    fetchCustomers() {
       axios
-        .get(`${server.baseURL}materials`, {
+        .get(`${server.baseURL}customers`, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
         })
-        // .then((data) => console.log(data))
-        .then((data) => (this.materials = data));
+        // .then((data) => console.log(data));
+        .then((data) => (this.customers = data));
     },
   },
 };

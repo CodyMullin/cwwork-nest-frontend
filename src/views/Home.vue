@@ -13,7 +13,7 @@
         </div>
         <div>
           <input
-            type="text"
+            type="password"
             id="password"
             v-model="password"
             class="h-12 w-64 border-gray-100 px-2 rounded-md bg-gray-50 mt-3"

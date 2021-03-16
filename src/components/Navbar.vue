@@ -46,7 +46,7 @@
             </li>
           </router-link>
           <router-link
-            to="/categories"
+            to="/category"
             class="py-6 text-white text-xl font-semibold w-full text-center hover:bg-gray-800"
           >
             <li>
