@@ -13,8 +13,12 @@ import CategoryId from "../views/Categories/Category.vue";
 import CreateCategory from "../views/Categories/CreateCategory.vue";
 
 import Customers from "../views/Customers.vue";
-// import CategoryId from "../views/Categories/Category.vue";
-// import CreateCategory from "../views/Categories/CreateCategory.vue";
+import CustomerId from "../views/Customers/Customer.vue";
+import CreateCustomer from "../views/Customers/CreateCustomer.vue";
+
+import Estimates from "../views/Estimates.vue";
+import EstimateId from "../views/Estimates/Estimate.vue";
+import CreateEstimate from "../views/Estimates/CreateEstimate.vue";
 
 Vue.use(VueRouter);
 
@@ -69,16 +73,31 @@ const routes = [
     name: "Customers",
     component: Customers,
   },
-  // {
-  //   path: "/categories/:id",
-  //   name: "Category",
-  //   component: CategoryId,
-  // },
-  // {
-  //   path: "/category/create",
-  //   name: "CreateCategory",
-  //   component: CreateCategory,
-  // },
+  {
+    path: "/customers/:id",
+    name: "Customer",
+    component: CustomerId,
+  },
+  {
+    path: "/customer/create",
+    name: "CreateCustomer",
+    component: CreateCustomer,
+  },
+  {
+    path: "/estimates",
+    name: "Estimates",
+    component: Estimates,
+  },
+  {
+    path: "/estimates/:id",
+    name: "Estimate",
+    component: EstimateId,
+  },
+  {
+    path: "/estimate/create",
+    name: "CreateEstimate",
+    component: CreateEstimate,
+  },
 ];
 
 const router = new VueRouter({

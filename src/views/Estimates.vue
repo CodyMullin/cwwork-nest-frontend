@@ -2,8 +2,8 @@
   <div>
     <Navbar />
     <div class="flex justify-between items-center">
-      <h4 class="px-4 py-6 text-xl font-semibold">Customers</h4>
-      <router-link to="/customer/create">
+      <h4 class="px-4 py-6 text-xl font-semibold">Estimates</h4>
+      <router-link to="/estimate/create">
         <a>
           <button
             class="mx-4 my-6 px-4 py-1 rounded-lg bg-green-400 text-sm text-gray-100 focus:outline-none"
@@ -23,28 +23,32 @@
     </div>
 
     <div class="py-6 px-4">
-      <div v-for="customer in customers.data" :key="customer.id">
-        <router-link :to="`/customers/${customer.id}`">
+      <div v-for="estimate in estimates.data" :key="estimate.id">
+        <router-link :to="`/estimates/${estimate.id}`">
           <a>
             <div class="flex items-center justify-between py-4">
               <div class="mx-4">
-                <div class="font-semibold text-lg">{{ customer.name }}</div>
+                <div class="font-semibold text-lg">
+                  {{ estimate.customerName }}
+                </div>
               </div>
-              <div class="px-3 py-1 text-gray-900">
-                <svg
-                  class="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="{2}"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+              <div
+                v-if="estimate.status === 'PENDING'"
+                class="bg-yellow-300 px-3 py-1 text-white rounded-md"
+              >
+                {{ estimate.status }}
+              </div>
+              <div
+                v-if="estimate.status === 'ACCEPTED'"
+                class="bg-green-300 px-3 py-1 text-white rounded-md"
+              >
+                {{ estimate.status }}
+              </div>
+              <div
+                v-if="estimate.status === 'REJECTED'"
+                class="bg-red-300 px-3 py-1 text-white rounded-md"
+              >
+                {{ estimate.status }}
               </div>
             </div>
             <hr />
@@ -63,23 +67,23 @@ export default {
   components: { Navbar },
   data() {
     return {
-      customers: [],
+      estimates: [],
       accessToken: localStorage.accessToken,
     };
   },
   created() {
-    this.fetchCustomers();
+    this.fetchEstimates();
   },
   methods: {
-    fetchCustomers() {
+    fetchEstimates() {
       axios
-        .get(`${server.baseURL}customers`, {
+        .get(`${server.baseURL}estimates`, {
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.customers = data));
+        .then((data) => (this.estimates = data));
     },
   },
 };
