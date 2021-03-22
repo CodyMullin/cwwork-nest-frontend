@@ -17,13 +17,16 @@
     <div class="px-4">
       <input
         type="text"
-        class="w-full border border-gray-900 px-3 py-2 text-sm font-semibold placeholder-gray-200 placeholder-opacity-100 border-opacity-25 rounded-md"
+        class="w-full border border-gray-900 px-3 py-2 text-sm font-semibold placeholder-gray-200 placeholder-opacity-100 border-opacity-25 rounded-md focus:outline-none focus:ring-2 focus:border-blue-500"
         placeholder="Search"
       />
     </div>
 
     <div class="py-6 px-4">
-      <div v-for="estimate in estimates.data" :key="estimate.id">
+      <div
+        v-for="estimate in estimates.data.slice().reverse()"
+        :key="estimate.id"
+      >
         <router-link :to="`/estimates/${estimate.id}`">
           <a>
             <div class="flex items-center justify-between py-4">
@@ -60,19 +63,19 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../components/Navbar.vue";
-import { server } from "../helper";
+import axios from 'axios'
+import Navbar from '../components/Navbar.vue'
+import { server } from '../helper'
 export default {
   components: { Navbar },
   data() {
     return {
       estimates: [],
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   created() {
-    this.fetchEstimates();
+    this.fetchEstimates()
   },
   methods: {
     fetchEstimates() {
@@ -83,8 +86,8 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.estimates = data));
+        .then((data) => (this.estimates = data))
     },
   },
-};
+}
 </script>

@@ -17,13 +17,17 @@
         </router-link>
       </div>
       <div class="mx-4 pt-8">
+        <div class="font-semibold mb-2">Description</div>
+        <div class="text-sm pb-8">
+          {{ this.material.description }}
+        </div>
         <div class="flex items-center justify-between text-lg py-4">
           <span>Category</span>
           <span>{{ this.material.category }}</span>
         </div>
         <hr />
         <div class="flex items-center justify-between text-lg py-4">
-          <span>Sales Cost</span>
+          <span>Selling Price</span>
           <span>
             ${{ this.material.salesCost }}/{{ this.material.measurement }}
           </span>
@@ -38,7 +42,7 @@
         <hr />
 
         <div class="flex items-center justify-between text-lg py-4">
-          <span>Purchase Cost</span>
+          <span>Material Cost</span>
           <span>${{ this.material.purchaseCost }}</span>
         </div>
         <hr />
@@ -48,9 +52,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../../components/Navbar.vue";
-import { server } from "../../helper";
+import axios from 'axios'
+import Navbar from '../../components/Navbar.vue'
+import { server } from '../../helper'
 export default {
   components: { Navbar },
   data() {
@@ -58,11 +62,11 @@ export default {
       material: {},
       materialId: 0,
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   created() {
-    this.materialId = this.$route.params.id;
-    this.fetchMaterials();
+    this.materialId = this.$route.params.id
+    this.fetchMaterials()
   },
   methods: {
     fetchMaterials() {
@@ -73,8 +77,8 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.material = data.data));
+        .then((data) => (this.material = data.data))
     },
   },
-};
+}
 </script>

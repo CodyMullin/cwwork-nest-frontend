@@ -16,6 +16,15 @@
       {{ this.estimate.customerName }} - {{ this.estimate.id }}
     </h4>
 
+    <div class="px-4 flex justify-between items-center">
+      <button class="w-1/2 text-white rounded-md mx-2 py-4 bg-green-500">
+        Approve
+      </button>
+      <button class="w-1/2 text-white rounded-md mx-2 py-4 bg-red-500">
+        Rejected
+      </button>
+    </div>
+
     <!-- MODAL -->
     <div
       v-if="showModal"
@@ -29,37 +38,41 @@
           <div
             class="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t"
           >
-            <h3 class="text-2xl font-semibold">
-              Add A Room
-            </h3>
-            <button
-              class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              v-on:click="toggleModal()"
-            >
-              ×
-            </button>
+            <div>
+              <h3 class="text-2xl font-semibold">
+                Add A Room
+              </h3>
+            </div>
+            <div class="flex items-center">
+              <div class="pt-1 px-4">${{ this.roomCost }}</div>
+              <button
+                class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                v-on:click="toggleModal()"
+              >
+                ×
+              </button>
+            </div>
           </div>
           <!--body-->
           <div
             class="relative px-6 py-3 flex-auto items-center justify-between"
           >
             <div>
-              <div class="pb-6">
-                <div class="flex">
-                  Estimate ID:
-                  <div>{{ this.estimateId }}</div>
-                </div>
+              <div class="">
                 <label>Room Name</label>
-                <input type="text" class="w-full h-12 border border-gray-400" />
+                <input
+                  type="text"
+                  class="w-full h-12 border border-gray-400 px-3"
+                />
               </div>
             </div>
-            <div class="flex" v-for="(job, index) in jobs" :key="index">
+            <div class="flex pt-6" v-for="(job, index) in jobs" :key="index">
               <div class="flex flex-col w-1/2">
                 <label>Material</label>
                 <input
                   type="text"
                   list="materials"
-                  class="h-12 border-gray-400 border mr-3"
+                  class="h-12 border-gray-400 border mr-3 px-3"
                   placeholder="Material"
                   v-model="jobs.materialName"
                   :name="`jobs[${index}][materialName]`"
@@ -71,15 +84,15 @@
                 </datalist>
               </div>
               <div class="flex flex-col w-1/4">
-                <label>Size</label>
+                <label>Area</label>
                 <input
                   type="text"
-                  class="h-12 border-gray-400 border mr-3"
-                  v-model="jobs.roomSize"
-                  :name="`jobs[${index}][roomSize]`"
+                  class="h-12 border-gray-400 border mr-1 px-3"
+                  v-model="jobs.roomArea"
+                  :name="`jobs[${index}][roomArea]`"
                 />
               </div>
-              <div class="flex flex-col w-1/4">
+              <div class="flex flex-col w-1/4 ml-3">
                 <label>Add</label>
                 <button
                   class="bg-green-500 w-full h-12 text-white rounded-sm px-3"
@@ -104,12 +117,12 @@
               Cancel
             </button>
             <button
-              class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+              class="text-green-500 bg-transparent border border-solid border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1"
               type="button"
               style="transition: all .15s ease"
               v-on:click="toggleModal()"
             >
-              Save Changes
+              Save
             </button>
           </div>
         </div>
@@ -120,31 +133,32 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../../components/Navbar.vue";
-import { server } from "../../helper";
+import axios from 'axios'
+import Navbar from '../../components/Navbar.vue'
+import { server } from '../../helper'
 export default {
   components: { Navbar },
   data() {
     return {
       estimate: {},
       materials: [],
+      roomCost: '0.00',
       jobs: [
         {
-          materialName: "",
-          roomSize: "",
+          materialName: '',
+          roomArea: '',
         },
       ],
 
       estimateId: 0,
       accessToken: localStorage.accessToken,
       showModal: false,
-    };
+    }
   },
   created() {
-    this.estimateId = this.$route.params.id;
-    this.fetchEstimate();
-    this.fetchMaterials();
+    this.estimateId = this.$route.params.id
+    this.fetchEstimate()
+    this.fetchMaterials()
   },
   methods: {
     fetchMaterials() {
@@ -155,7 +169,7 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.materials = data.data));
+        .then((data) => (this.materials = data.data))
     },
     fetchEstimate() {
       axios
@@ -165,17 +179,17 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.estimate = data.data));
+        .then((data) => (this.estimate = data.data))
     },
     toggleModal: function() {
-      this.showModal = !this.showModal;
+      this.showModal = !this.showModal
     },
     addJob() {
       this.jobs.push({
-        materialName: "",
-        roomSize: "",
-      });
+        materialName: '',
+        roomArea: '',
+      })
     },
   },
-};
+}
 </script>

@@ -17,7 +17,7 @@
     <div class="px-4">
       <input
         type="text"
-        class="w-full border border-gray-900 px-3 py-2 text-sm font-semibold placeholder-gray-200 placeholder-opacity-100 border-opacity-25 rounded-md"
+        class="w-full border border-gray-900 px-3 py-2 text-sm font-semibold placeholder-gray-200 placeholder-opacity-100 border-opacity-25 rounded-md focus:outline-none focus:ring-2 focus:border-blue-500"
         placeholder="Search"
       />
     </div>
@@ -56,19 +56,19 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../components/Navbar.vue";
-import { server } from "../helper";
+import axios from 'axios'
+import Navbar from '../components/Navbar.vue'
+import { server } from '../helper'
 export default {
   components: { Navbar },
   data() {
     return {
       categories: [],
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   created() {
-    this.fetchCategories();
+    this.fetchCategories()
   },
   methods: {
     fetchCategories() {
@@ -79,8 +79,8 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.categories = data));
+        .then((data) => (this.categories = data))
     },
   },
-};
+}
 </script>

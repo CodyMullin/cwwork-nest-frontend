@@ -14,7 +14,7 @@
         <label class="text-lg">Name</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Name"
           v-model="name"
         />
@@ -41,7 +41,7 @@
           <label class="text-lg">Sales Cost</label>
           <input
             type="text"
-            class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+            class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
             placeholder="Sales Cost"
             v-model="salesCost"
           />
@@ -50,7 +50,7 @@
           <label class="text-lg">Purchase Cost</label>
           <input
             type="text"
-            class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+            class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
             v-model="purchaseCost"
             placeholder="Purchase Cost"
           />
@@ -60,7 +60,7 @@
         <label class="text-lg">Installation Cost</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Installation Cost"
           v-model="installationCost"
         />
@@ -88,12 +88,22 @@
               v-model="unitOfMeasurement"
             />
           </div>
+          <div class="px-3">
+            <label class="pr-2">Inch</label>
+            <input
+              type="radio"
+              name="measurement"
+              id="inch"
+              value="inch"
+              v-model="unitOfMeasurement"
+            />
+          </div>
         </div>
       </div>
       <div class="pt-8">
         <label class="text-lg">Description</label>
         <textarea
-          class="w-full border border-gray-700 h-48 rounded-md px-3 pt-2 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-48 rounded-md px-3 pt-2 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Description"
           v-model="description"
         />
@@ -103,27 +113,27 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../../components/Navbar.vue";
-import { server } from "../../helper";
-import router from "../../router";
+import axios from 'axios'
+import Navbar from '../../components/Navbar.vue'
+import { server } from '../../helper'
+import router from '../../router'
 export default {
   components: { Navbar },
   data() {
     return {
       categories: [],
-      name: "",
-      category: "",
-      salesCost: "",
-      purchaseCost: "",
-      installationCost: "",
-      unitOfMeasurement: "",
-      description: "",
+      name: '',
+      category: '',
+      salesCost: '',
+      purchaseCost: '',
+      installationCost: '',
+      unitOfMeasurement: '',
+      description: '',
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   created() {
-    this.fetchCategories();
+    this.fetchCategories()
   },
   methods: {
     fetchCategories() {
@@ -133,7 +143,7 @@ export default {
             Authorization: `Bearer ${this.accessToken}`,
           },
         })
-        .then((data) => (this.categories = data.data));
+        .then((data) => (this.categories = data.data))
     },
     createMaterial() {
       let material = {
@@ -144,8 +154,8 @@ export default {
         installCost: this.installationCost,
         category: this.category,
         measurement: this.unitOfMeasurement,
-      };
-      this.__submitToServer(material);
+      }
+      this.__submitToServer(material)
     },
     __submitToServer(data) {
       axios
@@ -153,9 +163,9 @@ export default {
           headers: { Authorization: `Bearer ${this.accessToken}` },
         })
         .then(() => {
-          router.push({ name: "Materials" });
-        });
+          router.push({ name: 'Materials' })
+        })
     },
   },
-};
+}
 </script>

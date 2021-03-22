@@ -14,7 +14,7 @@
         <label class="text-lg">Name</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Name"
           v-model="name"
         />
@@ -22,7 +22,7 @@
       <div class="pt-8">
         <label class="text-lg">Notes</label>
         <textarea
-          class="w-full border border-gray-700 h-48 rounded-md px-3 pt-2 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-48 rounded-md px-3 pt-2 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Notes"
           v-model="notes"
         />
@@ -31,7 +31,7 @@
         <label class="text-lg">Email</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Email"
           v-model="email"
         />
@@ -40,7 +40,7 @@
         <label class="text-lg">Phone Number</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Phone Number"
           v-model="phoneNumber"
         />
@@ -49,7 +49,7 @@
         <label class="text-lg">Address</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Address"
           v-model="address"
         />
@@ -64,11 +64,11 @@
           <option value="" disabled selected>
             Reference
           </option>
-          <option value="google">Google</option>
-          <option value="yelp">Yelp</option>
-          <option value="f&f">Friend/Family</option>
-          <option value="website">Website</option>
-          <option value="other">Other</option>
+          <option value="Google">Google</option>
+          <option value="Yelp">Yelp</option>
+          <option value="F&F">Friend/Family</option>
+          <option value="Website">Website</option>
+          <option value="Other">Other</option>
         </select>
       </div>
       <div class="pt-8">
@@ -80,7 +80,7 @@
               type="radio"
               name="preference"
               id="email"
-              value="email"
+              value="Email"
               v-model="preference"
             />
           </div>
@@ -90,7 +90,7 @@
               type="radio"
               name="preference"
               id="call"
-              value="call"
+              value="Call"
               v-model="preference"
             />
           </div>
@@ -100,7 +100,7 @@
               type="radio"
               name="preference"
               id="text"
-              value="text"
+              value="Text"
               v-model="preference"
             />
           </div>
@@ -111,23 +111,23 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../../components/Navbar.vue";
-import { server } from "../../helper";
-import router from "../../router";
+import axios from 'axios'
+import Navbar from '../../components/Navbar.vue'
+import { server } from '../../helper'
+import router from '../../router'
 export default {
   components: { Navbar },
   data() {
     return {
-      name: "",
-      notes: "",
-      email: "",
-      address: "",
-      phoneNumber: "",
-      reference: "",
-      preference: "",
+      name: '',
+      notes: '',
+      email: '',
+      address: '',
+      phoneNumber: '',
+      reference: '',
+      preference: '',
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   methods: {
     createCustomer() {
@@ -139,8 +139,8 @@ export default {
         phoneNumber: this.phoneNumber,
         reference: this.reference,
         preference: this.preference,
-      };
-      this.__submitToServer(customer);
+      }
+      this.__submitToServer(customer)
     },
     __submitToServer(data) {
       //   console.log(data);
@@ -149,9 +149,9 @@ export default {
           headers: { Authorization: `Bearer ${this.accessToken}` },
         })
         .then(() => {
-          router.push({ name: "Customers" });
-        });
+          router.push({ name: 'Customers' })
+        })
     },
   },
-};
+}
 </script>

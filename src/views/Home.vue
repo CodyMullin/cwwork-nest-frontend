@@ -7,7 +7,7 @@
             type="text"
             id="username"
             v-model="username"
-            class="h-12 w-64 border-gray-100 px-2 rounded-md bg-gray-50"
+            class="h-12 w-64 border-gray-100 px-2 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:border-blue-600"
             placeholder="Enter Username"
           />
         </div>
@@ -16,7 +16,7 @@
             type="password"
             id="password"
             v-model="password"
-            class="h-12 w-64 border-gray-100 px-2 rounded-md bg-gray-50 mt-3"
+            class="h-12 w-64 border-gray-100 px-2 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:border-blue-600 mt-3"
             placeholder="Enter Password"
           />
         </div>
@@ -32,36 +32,36 @@
 </template>
 
 <script>
-import axios from "axios";
-import { server } from "../helper";
+import axios from 'axios'
+import { server } from '../helper'
 
 export default {
   data() {
     return {
-      username: "",
-      password: "",
-    };
+      username: '',
+      password: '',
+    }
   },
   methods: {
     signin() {
       let loginInfo = {
         username: this.username,
         password: this.password,
-      };
-      this.__submitToServer(loginInfo);
+      }
+      this.__submitToServer(loginInfo)
     },
     __submitToServer(data) {
       axios
         .post(`${server.baseURL}auth/signin`, data)
-        .then((data) => this.$store.commit("setToken", data.data.accessToken))
+        .then((data) => this.$store.commit('setToken', data.data.accessToken))
         .then(() =>
-          localStorage.setItem("accessToken", this.$store.state.accessToken)
-        );
-      this.$router.push("/dashboard");
+          localStorage.setItem('accessToken', this.$store.state.accessToken)
+        )
+      this.$router.push('/dashboard')
     },
     signout() {
-      this.$store.commit("removeToken", "");
+      this.$store.commit('removeToken', '')
     },
   },
-};
+}
 </script>

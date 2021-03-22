@@ -14,7 +14,7 @@
         <label class="text-lg">Name</label>
         <input
           type="text"
-          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3"
+          class="w-full border border-gray-700 h-10 rounded-md px-3 placeholder-gray-200 mt-3 focus:outline-none focus:ring-2 focus:border-blue-500"
           placeholder="Name"
           v-model="name"
         />
@@ -24,21 +24,21 @@
 </template>
 
 <script>
-import axios from "axios";
-import Navbar from "../../components/Navbar.vue";
-import { server } from "../../helper";
-import router from "../../router";
+import axios from 'axios'
+import Navbar from '../../components/Navbar.vue'
+import { server } from '../../helper'
+import router from '../../router'
 export default {
   components: { Navbar },
   data() {
     return {
       categories: [],
-      name: "",
+      name: '',
       accessToken: localStorage.accessToken,
-    };
+    }
   },
   created() {
-    this.fetchCategories();
+    this.fetchCategories()
   },
   methods: {
     fetchCategories() {
@@ -48,13 +48,13 @@ export default {
             Authorization: `Bearer ${this.accessToken}`,
           },
         })
-        .then((data) => (this.categories = data.data));
+        .then((data) => (this.categories = data.data))
     },
     createCategory() {
       let category = {
         name: this.name,
-      };
-      this.__submitToServer(category);
+      }
+      this.__submitToServer(category)
     },
     __submitToServer(data) {
       axios
@@ -62,9 +62,9 @@ export default {
           headers: { Authorization: `Bearer ${this.accessToken}` },
         })
         .then(() => {
-          router.push({ name: "Categories" });
-        });
+          router.push({ name: 'Categories' })
+        })
     },
   },
-};
+}
 </script>
