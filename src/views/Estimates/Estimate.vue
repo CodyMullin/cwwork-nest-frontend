@@ -5,12 +5,15 @@
       <h4 class="px-4 py-6 text-xl font-semibold">
         Estimates
       </h4>
-      <button
-        class="mx-4 my-6 px-4 py-1 rounded-lg bg-green-400 text-sm text-gray-100 focus:outline-none"
-        v-on:click="toggleModal()"
-      >
-        Add Room
-      </button>
+      <router-link :to="`/${estimateId}/createroom`">
+        <a>
+          <button
+            class="mx-4 my-6 px-4 py-1 rounded-lg bg-green-400 text-sm text-gray-100 focus:outline-none"
+          >
+            Add Room
+          </button>
+        </a>
+      </router-link>
     </div>
     <h4 class="px-4 py-6 text-xl font-semibold">
       {{ this.estimate.customerName }} - {{ this.estimate.id }}
@@ -69,38 +72,49 @@
             <div class="flex pt-6" v-for="(job, index) in jobs" :key="index">
               <div class="flex flex-col w-1/2">
                 <label>Material</label>
-                <input
+                <select
                   type="text"
                   list="materials"
                   class="h-12 border-gray-400 border mr-3 px-3"
                   placeholder="Material"
-                  v-model="jobs.materialName"
-                  :name="`jobs[${index}][materialName]`"
-                />
-                <datalist id="materials">
+                  @change="getMaterialCost(job.materialName)"
+                  v-model="job.materialName"
+                >
                   <option v-for="material in materials" :key="material.id">
-                    {{ material.name }}
+                    {{ material.id }}
                   </option>
-                </datalist>
+                </select>
               </div>
               <div class="flex flex-col w-1/4">
                 <label>Area</label>
                 <input
                   type="text"
                   class="h-12 border-gray-400 border mr-1 px-3"
-                  v-model="jobs.roomArea"
-                  :name="`jobs[${index}][roomArea]`"
+                  v-model="job.roomArea"
                 />
               </div>
-              <div class="flex flex-col w-1/4 ml-3">
-                <label>Add</label>
+              <div class="px-4">
+                <label>Price</label>
+                <div class="pt-3">${{ job.materialCost }}</div>
+              </div>
+              <div class="flex flex-col w-1/8 ml-3">
+                <label>Remove</label>
                 <button
-                  class="bg-green-500 w-full h-12 text-white rounded-sm px-3"
-                  v-on:click="addJob"
+                  class="bg-red-500 w-full h-12 text-white rounded-sm px-3"
+                  v-on:click="removeJob(index)"
                 >
-                  +
+                  x
                 </button>
               </div>
+            </div>
+            <div class="flex flex-col w-1/4 pt-8">
+              <label>Add</label>
+              <button
+                class="bg-green-500 w-full h-12 text-white rounded-sm px-3"
+                v-on:click="addJob"
+              >
+                +
+              </button>
             </div>
           </div>
 
@@ -108,6 +122,7 @@
           <div
             class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b"
           >
+            {{ jobs }}
             <button
               class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1"
               type="button"
@@ -133,32 +148,33 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Navbar from '../../components/Navbar.vue'
-import { server } from '../../helper'
+import axios from "axios";
+import Navbar from "../../components/Navbar.vue";
+import { server } from "../../helper";
 export default {
   components: { Navbar },
   data() {
     return {
       estimate: {},
       materials: [],
-      roomCost: '0.00',
+      roomCost: "0.00",
       jobs: [
         {
-          materialName: '',
-          roomArea: '',
+          materialName: "",
+          materialCost: 0,
+          roomArea: "",
+          jobCost: "",
         },
       ],
-
       estimateId: 0,
       accessToken: localStorage.accessToken,
       showModal: false,
-    }
+    };
   },
   created() {
-    this.estimateId = this.$route.params.id
-    this.fetchEstimate()
-    this.fetchMaterials()
+    this.estimateId = this.$route.params.id;
+    this.fetchEstimate();
+    this.fetchMaterials();
   },
   methods: {
     fetchMaterials() {
@@ -169,7 +185,7 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.materials = data.data))
+        .then((data) => (this.materials = data.data));
     },
     fetchEstimate() {
       axios
@@ -179,17 +195,32 @@ export default {
           },
         })
         // .then((data) => console.log(data));
-        .then((data) => (this.estimate = data.data))
+        .then((data) => (this.estimate = data.data));
     },
     toggleModal: function() {
-      this.showModal = !this.showModal
+      this.showModal = !this.showModal;
     },
     addJob() {
       this.jobs.push({
-        materialName: '',
-        roomArea: '',
-      })
+        materialName: "",
+        materialCost: 0,
+        roomArea: "",
+        jobCost: "",
+      });
+    },
+    removeJob(index) {
+      this.jobs.splice(index, 1);
+    },
+    getMaterialCost(id) {
+      axios
+        .get(`${server.baseURL}materials/${id}`, {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+        })
+        // .then((data) => console.log(data.data.salesCost));
+        .then((data) => (this.materialCost = data.data.salesCost));
     },
   },
-}
+};
 </script>

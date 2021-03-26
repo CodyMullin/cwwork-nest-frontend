@@ -20,6 +20,8 @@ import Estimates from "../views/Estimates.vue";
 import EstimateId from "../views/Estimates/Estimate.vue";
 import CreateEstimate from "../views/Estimates/CreateEstimate.vue";
 
+import CreateRoom from "../views/Rooms/CreateRoom.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -97,6 +99,11 @@ const routes = [
     path: "/estimate/create",
     name: "CreateEstimate",
     component: CreateEstimate,
+  },
+  {
+    path: "/:id/createRoom",
+    name: "CreateRoom",
+    component: CreateRoom,
   },
 ];
 
