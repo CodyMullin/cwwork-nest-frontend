@@ -1,24 +1,3 @@
-# cwwork-nestjs
+# CWWork Front-End
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+This project was one that was being built under my current company, however we never took it live. The project was being built using VueJS for the front-end and NestJS (different repository) as the backend. CWWork was a flooring website for my company to use on site where they can put in information about the customer, the different rooms they would work on for the project, enter different material costings, and create an estimate based on the room size and materials used. Current features of the project include Authentication, CRM (Name, email, phoneNumber, address, references, notes, and preference), and different rooms, categories, and materials used for flooring. 
